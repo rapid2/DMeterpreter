@@ -6,6 +6,7 @@ Dropbox Client
 import dropbox
 from drive.drive_client import DriveClient
 from client_dropbox.dropbox_watcher import DropboxWatcher
+from third_party.requester import get_encoding
 
 
 class DropboxClient(DriveClient):
@@ -26,6 +27,7 @@ class DropboxClient(DriveClient):
             self._dropbox.close()
             self._dropbox = None
         if self._dropbox_watcher:
+            self._dropbox_watcher.stop()
             self._dropbox_watcher.stop()
             self._dropbox_watcher = None
 
@@ -54,14 +56,18 @@ class DropboxClient(DriveClient):
         if not self._dropbox:
             return False
 
-        result = self._dropbox.files_delete_v2(path)
-        return result is not None
+        try:
+            result = self._dropbox.files_delete_v2(path)
+            return result is not None
+        except Exception as ex:
+            print(f"Exception: {str(ex)}]")
+        return False
 
-    def upload_file_content(self, content, remote_file_path):
+    def upload_file_content(self, content, encoding, remote_file_path):
         if not self._dropbox:
             return False
 
-        result = self._dropbox.files_upload(bytes(content, 'utf-8'), remote_file_path, mute=True)
+        result = self._dropbox.files_upload(bytes(content, encoding), remote_file_path, mute=True)
         return result is not None
 
     def upload_file(self, local_file_path, remote_file_path):
@@ -77,7 +83,13 @@ class DropboxClient(DriveClient):
             return False
 
         result = self._dropbox.files_download(remote_file_path)
-        return str(result[1].content)
+        try:
+            encoding = get_encoding(result[1])
+            result = result[1].content.decode(encoding)
+        except Exception as ex:
+            result = result[1].content
+            print(f"Exception: {str(ex)}]")
+        return result
 
     def download_file(self, remote_file_path, local_file_path):
         if not self._dropbox:

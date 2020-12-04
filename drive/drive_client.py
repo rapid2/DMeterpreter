@@ -22,7 +22,7 @@ class DriveClient(ABC):
         pass
 
     @abstractmethod
-    def upload_file_content(self, content: bytes, remote_file_path: str) -> bool:
+    def upload_file_content(self, content: bytes, encoding: str, remote_file_path: str) -> bool:
         pass
 
     @abstractmethod

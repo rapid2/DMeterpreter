@@ -5,6 +5,8 @@ Command Factory
 
 from command.command import CommandBase
 from command.command_ls import CommandLS
+from command.command_pwd import CommandPWD
+from command.command_cd import CommandCD
 
 
 class CommandFactory:
@@ -20,16 +22,26 @@ class CommandFactory:
             return True
 
         # Register commands
-        # ls
         cls._commands.append("ls")
+        cls._commands.append("pwd")
+        cls._commands.append("cd")
 
         return True
 
-    def cleanup(self):
+    @classmethod
+    def cleanup(cls):
         cls._commands.clear()
+
+    @classmethod
+    def get_command_names(cls):
+        return cls._commands
 
     @classmethod
     def create(cls, name) -> CommandBase:
         if name in cls._commands:
             if name == "ls":
                 return CommandLS()
+            elif name == "pwd":
+                return CommandPWD()
+            elif name == "cd":
+                return CommandCD()

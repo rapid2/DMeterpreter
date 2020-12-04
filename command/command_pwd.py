@@ -1,5 +1,5 @@
 """
-Command ls
+Command pwd
 """
 
 
@@ -7,9 +7,9 @@ from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandLS(CommandBase):
+class CommandPWD(CommandBase):
     def get_name(self):
-        return "ls"
+        return "pwd"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +19,7 @@ class CommandLS(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("dir")
+        engine.run_script("pwd")
         return True
 
     def stop(self):
