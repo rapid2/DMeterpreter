@@ -1,15 +1,16 @@
 """
-Command pwd
+Command get antivirus name
 """
 
 
+import re
 from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandPWD(CommandBase):
+class CommandGetAVName(CommandBase):
     def get_name(self):
-        return "pwd"
+        return "get_av_name"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +20,9 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("pwd")
+        script = "$AntivirusProduct = Get-WmiObject -Namespace \"root\SecurityCenter2\" -Query \"SELECT * FROM AntiVirusProduct\"  @psboundparameters;" \
+                 "Write-host $AntivirusProduct.displayName;"
+        engine.run_script(script)
         return True
 
     def stop(self):

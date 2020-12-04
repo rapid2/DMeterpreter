@@ -26,6 +26,9 @@ class CommandLS(CommandBase):
         pass
         "Nothing to do"
 
+    def process_output(self, output):
+        return output
+
     def drive_changed(self):
         pass
         "Nothing to do"

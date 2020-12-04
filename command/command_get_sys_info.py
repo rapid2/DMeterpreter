@@ -1,15 +1,16 @@
 """
-Command pwd
+Command get system info
 """
 
 
+import re
 from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandPWD(CommandBase):
+class CommandGetSysInfo(CommandBase):
     def get_name(self):
-        return "pwd"
+        return "get_sys_info"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +20,8 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("pwd")
+        script = "Get-CimInstance Win32_OperatingSystem | Select-Object  Caption, InstallDate, ServicePackMajorVersion, OSArchitecture, BootDevice,  BuildNumber, CSName | FL"
+        engine.run_script(script)
         return True
 
     def stop(self):

@@ -1,5 +1,5 @@
 """
-Command ls
+Command kill process
 """
 
 
@@ -7,27 +7,28 @@ from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandCD(CommandBase):
+class CommandKillProcess(CommandBase):
     def __init__(self):
         self._arguments = {}
 
     def get_name(self):
-        return "cd"
+        return "kill_process"
 
     def get_arguments_names(self):
-        return {"path": "Directory path"}
+        return {"name": "Process name"}
 
     def set_arguments(self, arguments):
         self._arguments = arguments
 
     def run(self, engine, client, logger):
-        path = self._arguments.get("path")
-        if not path:
-            path = self._arguments.get(0)
-        if path:
-            engine.run_script("cd " + path)
+        name = self._arguments.get("name")
+        if not name:
+            name = self._arguments.get(0)
+        if name:
+            script = f"Stop-Process -Name {name} -Force "
+            engine.run_script(script)
             return True
-        logger.log_message("'path' argument is missing")
+        logger.log_message("'name' argument is missing")
         return False
 
     def stop(self):

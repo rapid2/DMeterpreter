@@ -1,15 +1,16 @@
 """
-Command pwd
+Command list programs
 """
 
 
+import re
 from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandPWD(CommandBase):
+class CommandListPrograms(CommandBase):
     def get_name(self):
-        return "pwd"
+        return "list_programs"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +20,9 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("pwd")
+        script = "dir 'C:\Program Files\';" \
+                 "dir 'C:\Program Files (x86)';"
+        engine.run_script(script)
         return True
 
     def stop(self):

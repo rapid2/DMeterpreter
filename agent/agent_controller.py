@@ -50,7 +50,7 @@ class AgentController:
                     agent_names = self._get_agent_names()
                     for index in range(len(agent_names)):
                         name = agent_names[index]
-                        self._logger.log_message(f"{index}. {name}")
+                        self._logger.log_message(f"{index + 1}. {name}")
                 elif name == "select":
                     if args.get(0):
                         self._active_agent_id = args[0]

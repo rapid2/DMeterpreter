@@ -1,15 +1,16 @@
 """
-Command pwd
+Command get ip
 """
 
 
+import re
 from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandPWD(CommandBase):
+class CommandGetIp(CommandBase):
     def get_name(self):
-        return "pwd"
+        return "get_ip"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +20,9 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("pwd")
+        script = "$wc=New-Object net.webclient;" \
+                 "$wc.downloadstring('http://checkip.dyndns.com');"
+        engine.run_script(script)
         return True
 
     def stop(self):
@@ -27,7 +30,9 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def process_output(self, output):
-        return output
+        pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
+        ls = pattern.search(output)
+        return ls[0]
 
     def drive_changed(self):
         pass

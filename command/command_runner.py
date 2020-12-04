@@ -94,6 +94,7 @@ class CommandRunner:
             if state == DSState.GettingOutput:
                 output = self._script_runner.get_script_output()
                 if output:
+                    output = self._current_command.process_output(output)
                     self._logger.log_message("output: " + output)
                 self._script_runner.output_taken()
 

@@ -46,6 +46,9 @@ class DSRunner:
         self._script_state_listener = None
         self._script_output = ""
 
+    def get_path_prefix(self):
+        return self._path_prefix
+
     def init(self, drive_client: DriveClient, path_prefix: str,
              state_listener: DSListener = None):
         self._drive_client = drive_client
@@ -114,6 +117,7 @@ class DSRunner:
                 if exists_script_output_file:
                     self._change_state(DSState.GettingOutput)
         except Exception as ex:
+            raise ex
             print(f"Exception file({__name__}): {str(ex)}")
 
     def _change_state(self, state):

@@ -31,5 +31,9 @@ class CommandBase(ABC):
         pass
 
     @abstractmethod
+    def process_output(self, output: str) -> str:
+        pass
+
+    @abstractmethod
     def drive_changed(self):
         pass

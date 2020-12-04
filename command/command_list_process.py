@@ -1,15 +1,16 @@
 """
-Command pwd
+Command list process
 """
 
 
+import re
 from command.command import CommandBase
 from logger.logger import Logger
 
 
-class CommandPWD(CommandBase):
+class CommandListProcess(CommandBase):
     def get_name(self):
-        return "pwd"
+        return "list_process"
 
     def get_arguments_names(self):
         return {}
@@ -19,7 +20,8 @@ class CommandPWD(CommandBase):
         "Nothing to do"
 
     def run(self, engine, client, logger):
-        engine.run_script("pwd")
+        script = "get-process"
+        engine.run_script(script)
         return True
 
     def stop(self):
