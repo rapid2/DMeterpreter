@@ -114,12 +114,12 @@ class DSRunner:
                 if exists_script_output_file:
                     self._change_state(DSState.GettingOutput)
         except Exception as ex:
-            print(f"Exception: {str(ex)}]")
+            print(f"Exception file({__name__}): {str(ex)}")
 
     def _change_state(self, state):
         self._script_state = state
         if self._script_state_listener:
-            print("State: ", state.name)
+            print("Command: ", state.name)
             self._script_state_listener.changed(state)
 
     def _get_script_file_path(self):

@@ -32,7 +32,8 @@ class AgentMeterpreter:
             self._command_runner.reset()
         else:
             self._command_runner.run(name, args)
-            self._command_runner.wait_for_finish(30)
+            if not self._command_runner.wait_for_finish():
+                self._logger.log_message("Timeout")
 
     def get_command_names(self):
         names = self._command_factory.get_command_names()

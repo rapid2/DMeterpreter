@@ -60,7 +60,7 @@ class DropboxClient(DriveClient):
             result = self._dropbox.files_delete_v2(path)
             return result is not None
         except Exception as ex:
-            print(f"Exception: {str(ex)}]")
+            print(f"Exception file({__name__}): {str(ex)}")
         return False
 
     def upload_file_content(self, content, encoding, remote_file_path):
@@ -87,8 +87,8 @@ class DropboxClient(DriveClient):
             encoding = get_encoding(result[1])
             result = result[1].content.decode(encoding)
         except Exception as ex:
-            result = result[1].content
-            print(f"Exception: {str(ex)}]")
+            result = str(result[1].content)
+            print(f"Exception file({__name__}): {str(ex)}")
         return result
 
     def download_file(self, remote_file_path, local_file_path):

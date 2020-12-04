@@ -87,6 +87,7 @@ class CommandRunner:
             time.sleep(1)
             timeout -= 1
             script_state = self._script_runner.get_script_state()
+        return timeout != 0
 
     def _script_state_changed(self, state):
         if self._current_command:
