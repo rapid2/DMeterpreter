@@ -8,18 +8,24 @@ from logger.logger import Logger
 
 
 class CommandLS(CommandBase):
+    def __init__(self):
+        self._arguments = {}
+
     def get_name(self):
         return "ls"
 
     def get_arguments_names(self):
-        return {}
+        return {"path": "Directory path"}
 
     def set_arguments(self, arguments):
-        pass
-        "Nothing to do"
+        self._arguments = arguments
 
     def run(self, engine, client, logger):
-        engine.run_script("dir")
+        path = self._arguments.get(0)
+        if path:
+            engine.run_script("dir " + path)
+        else:
+            engine.run_script("dir")
         return True
 
     def stop(self):

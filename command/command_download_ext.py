@@ -51,7 +51,6 @@ class CommandDownloadExt(CommandBase):
         extension = self._arguments.get(0)
         file_list = self._drive_client.list_dir(path_prefix)
         for file in file_list:
-            print("+: ", file)
             if file.endswith(extension):
                 rpath = path_prefix + "/" + file
                 lpath = "." + path_prefix + os.sep + file
