@@ -17,6 +17,7 @@ from command.command_kill_process import CommandKillProcess
 from command.command_list_process import CommandListProcess
 from command.command_list_devices import CommandListDevices
 from command.command_download import CommandDownload
+from command.command_upload import CommandUpload
 
 
 class CommandFactory:
@@ -45,6 +46,7 @@ class CommandFactory:
         cls._commands.append("list_process")
         cls._commands.append("list_devices")
         cls._commands.append("download")
+        cls._commands.append("upload")
 
         return True
 
@@ -85,3 +87,5 @@ class CommandFactory:
                 return CommandListDevices()
             elif name == "download":
                 return CommandDownload()
+            elif name == "upload":
+                return CommandUpload()
