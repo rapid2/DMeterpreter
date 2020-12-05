@@ -21,13 +21,12 @@ class CommandCD(CommandBase):
         self._arguments = arguments
 
     def run(self, engine, client, logger):
-        path = self._arguments.get("path")
-        if not path:
-            path = self._arguments.get(0)
+        path = self._arguments.get(0)
         if path:
-            engine.run_script("cd " + path)
+            script = "cd " + f"\"{path}\""
+            engine.run_script(script)
             return True
-        logger.log_message("'path' argument is missing")
+        logger.log_message("Remote path not specified")
         return False
 
     def stop(self):

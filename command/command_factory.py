@@ -15,6 +15,8 @@ from command.command_get_av_name import CommandGetAVName
 from command.command_get_sys_info import CommandGetSysInfo
 from command.command_kill_process import CommandKillProcess
 from command.command_list_process import CommandListProcess
+from command.command_list_devices import CommandListDevices
+from command.command_download import CommandDownload
 
 
 class CommandFactory:
@@ -41,6 +43,8 @@ class CommandFactory:
         cls._commands.append("get_sys_info")
         cls._commands.append("kill_process")
         cls._commands.append("list_process")
+        cls._commands.append("list_devices")
+        cls._commands.append("download")
 
         return True
 
@@ -77,3 +81,7 @@ class CommandFactory:
                 return CommandKillProcess()
             elif name == "list_process":
                 return CommandListProcess()
+            elif name == "list_devices":
+                return CommandListDevices()
+            elif name == "download":
+                return CommandDownload()

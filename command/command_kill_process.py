@@ -21,14 +21,12 @@ class CommandKillProcess(CommandBase):
         self._arguments = arguments
 
     def run(self, engine, client, logger):
-        name = self._arguments.get("name")
-        if not name:
-            name = self._arguments.get(0)
+        name = self._arguments.get(0)
         if name:
             script = f"Stop-Process -Name {name} -Force "
             engine.run_script(script)
             return True
-        logger.log_message("'name' argument is missing")
+        logger.log_message("Name not specified")
         return False
 
     def stop(self):

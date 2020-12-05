@@ -57,11 +57,11 @@ class AgentController:
                         self._meterpreter.init(self._dive_client, args[0])
                     else:
                         self._logger.log_message("Invalid agent specified")
-                elif name == "restart":
+                elif name == "restart_agents":
                     self._restart_agents()
                 elif name == "help":
                     self._log_help()
-                elif name == "agent_commands":
+                elif name == "list_agent_commands":
                     self._log_agent_help()
                 elif name == "exit":
                     if self._active_agent_id:
@@ -75,23 +75,22 @@ class AgentController:
                     self._logger.log_message("Invalid command specified")
 
     def parse_input(self, _input):
-        _input_list = _input.split(" ")
-        name = ""
-        args = {}
-        if len(_input_list) > 0:
-            name = _input_list[0]
-            index = 0
-            key = ""
-            for arg in _input_list[1:]:
-                if arg.startswith("-"):
-                    args[arg] = ""
-                    key = arg
-                elif key:
-                    args[key] = arg
-                    key = ""
-                else:
-                    args[index] = arg
-                    index += 1
+        index = _input.find(" ")
+        first_argument = ""
+        if index > 0:
+            name = _input[0:index].strip()
+            first_argument = _input[index:].strip()
+        else:
+            name = _input.strip()
+        if first_argument.startswith("'"):
+            first_argument = first_argument[1:]
+            if first_argument.endswith("'"):
+                first_argument = first_argument[:-1]
+        elif first_argument.startswith('"'):
+            first_argument = first_argument[1:]
+            if first_argument.endswith('"'):
+                first_argument = first_argument[:-1]
+        args = {0: first_argument}
         return name, args
 
     def _get_agent_names(self):
@@ -104,12 +103,12 @@ class AgentController:
             self._dive_client.remove("/" + name)
 
     def _log_help(self):
-        self._logger.log_message("list           - lists all agents")
-        self._logger.log_message("select         - selects agent")
-        self._logger.log_message("restart        - restarts agents")
-        self._logger.log_message("help           - prints this message")
-        self._logger.log_message("agent_commands - prints agent commands")
-        self._logger.log_message("exit           - exit current agent or program")
+        self._logger.log_message("list                - lists all agents")
+        self._logger.log_message("select              - selects agent")
+        self._logger.log_message("restart_agents      - restarts agents")
+        self._logger.log_message("list_agent_commands - prints agent commands")
+        self._logger.log_message("help                - prints this message")
+        self._logger.log_message("exit                - exit current agent or program")
 
     def _log_agent_help(self):
         names = self._meterpreter.get_command_names()
