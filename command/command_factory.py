@@ -18,6 +18,9 @@ from command.command_list_process import CommandListProcess
 from command.command_list_devices import CommandListDevices
 from command.command_download import CommandDownload
 from command.command_upload import CommandUpload
+from command.command_run_exe import CommandRunExe
+from command.command_run_ps import CommandRunPS
+from command.command_run_vbs import CommandRunVBS
 
 
 class CommandFactory:
@@ -47,6 +50,9 @@ class CommandFactory:
         cls._commands.append("list_devices")
         cls._commands.append("download")
         cls._commands.append("upload")
+        cls._commands.append("run_exe")
+        cls._commands.append("run_ps")
+        cls._commands.append("run_vbs")
 
         return True
 
@@ -89,3 +95,9 @@ class CommandFactory:
                 return CommandDownload()
             elif name == "upload":
                 return CommandUpload()
+            elif name == "run_exe":
+                return CommandRunExe()
+            elif name == "run_ps":
+                return CommandRunPS()
+            elif name == "run_vbs":
+                return CommandRunVBS()

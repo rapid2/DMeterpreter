@@ -19,7 +19,7 @@ class CommandUpload(CommandBase):
         self._file_state = 0
 
     def get_name(self):
-        return "download"
+        return "upload"
 
     def get_arguments_names(self):
         return {"path": "Local file path"}
