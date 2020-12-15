@@ -32,7 +32,9 @@ class CommandGetIp(CommandBase):
     def process_output(self, output):
         pattern = re.compile(r'(\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})')
         ls = pattern.search(output)
-        return ls[0]
+        if ls:
+            return ls[0]
+        return output
 
     def drive_changed(self):
         pass

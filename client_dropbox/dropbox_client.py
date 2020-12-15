@@ -36,13 +36,16 @@ class DropboxClient(DriveClient):
         if not self._dropbox:
             return _list
 
-        response = self._dropbox.files_list_folder(dir_path)
-        for file in response.entries:
-            _list.append(file.name)
-        while response.has_more:
-            self._dropbox.files_list_folder_continue(response.cursor)
+        try:
+            response = self._dropbox.files_list_folder(dir_path)
             for file in response.entries:
                 _list.append(file.name)
+            while response.has_more:
+                self._dropbox.files_list_folder_continue(response.cursor)
+                for file in response.entries:
+                    _list.append(file.name)
+        except Exception as ex:
+            print(f"Exception file({__name__}): {str(ex)}")
         return _list
 
     def make_dir(self, dir_path):
